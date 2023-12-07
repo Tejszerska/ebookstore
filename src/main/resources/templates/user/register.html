@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" style="margin-top:100px;">
+    <h2>New customer registration</h2>
+    <div class="row">
+        <div class="message" th:if="${message != null}">
+            [[${message}]]
+        </div>
+        <form th:action="@{/registration}" th:object="${user}" method="post" role="form">
+            <h4>Login info:</h4>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="text" class="form-control" id="email" th:field="*{email}">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="text" class="form-control" id="password" th:field="*{password}">
+            </div>
+            <h4>Address:</h4>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name </label>
+                <input type="text" class="form-control" id="name" th:field="*{name}">
+            </div>
+            <!--        <div class="mb-3">-->
+            <!--            <label for="surname" class="form-label"> Surname</label>-->
+            <!--            <input type="text" class="form-control" id="surname" th:field="*{surname}">-->
+            <!--        </div>-->
+
+
+            <!--        <div class="mb-3">-->
+            <!--            <label for="city" class="form-label"> City</label>-->
+            <!--            <input type="text" class="form-control" id="city" th:field="*{city}">-->
+            <!--        </div>-->
+
+            <!--        <div class="mb-3">-->
+            <!--            <label for="street" class="form-label"> Street</label>-->
+            <!--            <input type="text" class="form-control" id="street" th:field="*{street}">-->
+            <!--        </div>-->
+
+            <!--        <div class="mb-3">-->
+            <!--            <label for="zipCode" class="form-label"> Zip Code</label>-->
+            <!--            <input type="text" class="form-control" id="zipCode" th:field="*{zipCode}">-->
+            <!--        </div>-->
+
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
+                    <label class="form-check-label" for="flexCheckDefault">
+                        I accept Terms&Conditions
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%">Register</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
