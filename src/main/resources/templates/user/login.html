@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
-     <link rel="stylesheet" th:href="@{../css/styles.css}">
+    <title>Login</title>
+    <link th:href="@{/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/style.css}" rel="stylesheet">
+
 </head>
 <body>
     <div class="container">
@@ -19,7 +21,6 @@
         <form 
          th:action="@{/login}"
          method="post"
-         
         >
             
             

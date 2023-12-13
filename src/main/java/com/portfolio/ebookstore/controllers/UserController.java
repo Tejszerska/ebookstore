@@ -1,7 +1,7 @@
 package com.portfolio.ebookstore.controllers;
 
-import com.portfolio.ebookstore.dto.UserDto;
-import com.portfolio.ebookstore.service.UserService;
+import com.portfolio.ebookstore.model.dto.UserDto;
+import com.portfolio.ebookstore.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

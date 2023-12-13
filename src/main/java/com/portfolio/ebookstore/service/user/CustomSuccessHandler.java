@@ -1,4 +1,4 @@
-package com.portfolio.ebookstore.service;
+package com.portfolio.ebookstore.service.user;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

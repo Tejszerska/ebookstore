@@ -3,6 +3,8 @@ package com.portfolio.ebookstore.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,4 +20,6 @@ public class User {
     private String password;
     private String role;
     private String name;
+    @OneToMany (mappedBy = "user")
+    private List<Order> pastPurchases;
 }

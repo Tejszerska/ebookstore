@@ -1,7 +1,7 @@
 package com.portfolio.ebookstore.config;
-import com.portfolio.ebookstore.service.CustomSuccessHandler;
+import com.portfolio.ebookstore.service.user.CustomSuccessHandler;
 
-import com.portfolio.ebookstore.service.CustomUserDetailsService;
+import com.portfolio.ebookstore.service.user.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +35,7 @@ public class SecurityConfig {
 
 		.authorizeHttpRequests(request -> request.requestMatchers("/admin-page")
 				.hasAuthority("ADMIN").requestMatchers("/user-page").hasAuthority("USER")
-				.requestMatchers("/registration", "/css/**").permitAll()
+				.requestMatchers("/registration", "/static/**").permitAll()
 				.anyRequest().authenticated())
 		
 		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")

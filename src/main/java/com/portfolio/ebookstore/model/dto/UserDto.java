@@ -1,4 +1,4 @@
-package com.portfolio.ebookstore.dto;
+package com.portfolio.ebookstore.model.dto;
 
 import lombok.Builder;
 import lombok.Data;

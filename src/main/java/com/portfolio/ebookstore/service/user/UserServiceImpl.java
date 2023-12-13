@@ -1,6 +1,6 @@
-package com.portfolio.ebookstore.service;
+package com.portfolio.ebookstore.service.user;
 
-import com.portfolio.ebookstore.dto.UserDto;
+import com.portfolio.ebookstore.model.dto.UserDto;
 import com.portfolio.ebookstore.entities.User;
 import com.portfolio.ebookstore.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

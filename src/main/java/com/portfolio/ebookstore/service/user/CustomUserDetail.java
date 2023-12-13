@@ -1,4 +1,4 @@
-package com.portfolio.ebookstore.service;
+package com.portfolio.ebookstore.service.user;
 
 import com.portfolio.ebookstore.entities.User;
 import lombok.AllArgsConstructor;
