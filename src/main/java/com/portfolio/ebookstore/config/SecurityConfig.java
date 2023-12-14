@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,12 +31,13 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		
+
 		http.csrf(AbstractHttpConfigurer::disable)
 
-		.authorizeHttpRequests(request -> request.requestMatchers("/admin-page")
-				.hasAuthority("ADMIN").requestMatchers("/user-page").hasAuthority("USER")
-				.requestMatchers("/registration", "/static/**").permitAll()
+		.authorizeHttpRequests(request -> request
+				.requestMatchers("/admin-page").hasAuthority("ADMIN")
+				.requestMatchers("/user-page").hasAuthority("USER")
+				.requestMatchers("/ebookstore", "/ebookstore/*", "*/login", "*/error", "*/login-error", "*/logout", "/img/*", "/bootstrap.css", "/style.css").permitAll()
 				.anyRequest().authenticated())
 		
 		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
@@ -48,6 +50,8 @@ public class SecurityConfig {
 		return http.build();
 		
 	}
+
+
 	
 	@Autowired
 	public void configure (AuthenticationManagerBuilder auth) throws Exception {

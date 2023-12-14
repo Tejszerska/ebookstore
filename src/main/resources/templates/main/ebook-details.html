@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/style.css}" rel="stylesheet">
+    <title>EBOOKSTORE - details</title>
+</head>
+<body>
+<div th:insert="~{fragments/nav-bar::nav}"></div>
+
+
+<div class="container">
+    <div class="row">
+        <h1 style="display: block; text-align: center">
+            <div th:text="${ebookById.title}"></div>
+        </h1>
+        <div class="col-6">
+            <img th:src="@{/img/__${ebookById.imageName}__}" class = " mx-auto p-2 " style="height: 50%" /></div>
+        <div class="col-6">
+
+            <table class="table">
+                <tr>
+                    <td >Title</td>
+                    <td th:text="${ebookById.title}"></td>
+                </tr>
+                <tr>
+                    <td >Authors</td>
+                    <td th:text="${ebookById.authors}"></td>
+                </tr>
+                <tr>
+                    <td >Publisher</td>
+                    <td th:text="${ebookById.publisher}"></td>
+                </tr>
+                <tr>
+                    <td >Description</td>
+                    <td th:text="${ebookById.description}"></td>
+                </tr>
+                <tr>
+                    <td >Genre</td>
+                    <td th:text="${ebookById.genre}"></td>
+                </tr>
+                <tr>
+                    <td >Price</td>
+                    <td th:text="${ebookById.sellingPrice}"></td>
+                </tr>
+
+
+                <form th:action="@{/ebookstore/cart/add}" method="post">
+                    <input type="hidden" name = "ebookId" th:value="${ebookById.id}"/>
+
+                    <button type="submit" style="width: 100%;" class="btn btn-primary mb-3">Add to cart</button>
+                </form>
+
+            </table>
+
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

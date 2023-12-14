@@ -1,35 +1,28 @@
-package com.portfolio.ebookstore.entities;
+package com.portfolio.ebookstore.model.dto;
 
 import com.portfolio.ebookstore.model.enums.Genre;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Entity
-@NoArgsConstructor(force = true)
+
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
 @Builder
-@Table(name = "ebooks")
-public class Ebook {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EbookDto {
     private Long id;
     private String title;
     private String authors;
     private String publisher;
     private String imageName;
     private String description;
-    @Enumerated(EnumType.STRING)
-    private Genre genre;
-    @NonNull
+    private String genre;
     private BigDecimal sellingPrice;
-    @NonNull
     private BigDecimal purchaseCost;
-    @NonNull
     private boolean isAvailable;
-
-
 }

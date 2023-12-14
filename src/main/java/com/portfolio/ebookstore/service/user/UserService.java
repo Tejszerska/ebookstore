@@ -5,5 +5,6 @@ import com.portfolio.ebookstore.entities.User;
 
 
 public interface UserService {
-    User save(UserDto userDto);
+    User saveUser(UserDto userDto);
+    User saveAdmin(UserDto userDto);
 }

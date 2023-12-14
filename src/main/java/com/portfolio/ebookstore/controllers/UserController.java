@@ -18,13 +18,13 @@ import java.security.Principal;
 public class UserController {
     private final UserService userService;
     private final UserDetailsService userDetailsService;
-    @GetMapping("/registration")
+    @GetMapping("ebookstore/registration")
     public String getRegistrationView(@ModelAttribute ("user") UserDto userDto){
         return "/user/register";
     }
-    @PostMapping("/registration")
+    @PostMapping("ebookstore/registration")
     public String saveUser(@ModelAttribute ("user") UserDto userDto, Model model){
-        userService.save(userDto);
+        userService.saveUser(userDto);
         model.addAttribute("message", "Registered successfully!");
         return "/user/register";
     }
