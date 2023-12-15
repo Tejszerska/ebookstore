@@ -41,10 +41,5 @@ public class UserController {
         return "/user/user";
     }
 
-    @GetMapping("admin-page")
-    public String adminPage (Model model, Principal principal) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        model.addAttribute("user", userDetails);
-        return "/user/admin";
-    }
+
 }
