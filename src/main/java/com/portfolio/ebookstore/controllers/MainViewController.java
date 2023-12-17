@@ -2,7 +2,7 @@ package com.portfolio.ebookstore.controllers;
 
 import com.portfolio.ebookstore.components.ShoppingCart;
 import com.portfolio.ebookstore.model.dto.EbookDto;
-import com.portfolio.ebookstore.service.user.EbookService;
+import com.portfolio.ebookstore.service.EbookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

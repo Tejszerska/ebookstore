@@ -5,7 +5,6 @@ import com.portfolio.ebookstore.model.dto.EbookDto;
 import com.portfolio.ebookstore.model.enums.Genre;
 import com.portfolio.ebookstore.repositories.EbookRepository;
 import com.portfolio.ebookstore.repositories.OrderRepository;
-import com.portfolio.ebookstore.service.user.EbookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

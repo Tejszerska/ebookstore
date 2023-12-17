@@ -1,4 +1,4 @@
-package com.portfolio.ebookstore.service.user;
+package com.portfolio.ebookstore.service;
 
 import com.portfolio.ebookstore.entities.Ebook;
 import com.portfolio.ebookstore.model.dto.EbookDto;
