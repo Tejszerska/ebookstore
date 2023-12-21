@@ -41,19 +41,30 @@ INSERT INTO users (email, password, name, role )
 VALUES
     ('admin@admin', '$2a$12$.MF.VaMgCKTEASGtfHfrmO3w3hFcOvZ/3VlJuTHrYgJh17vuh1iWe',  'Administrator', 'ADMIN');
 
+
+INSERT INTO orders (id, user_id, total_cost, order_time)
+VALUES (1, 1, 75.99, '2023-12-17 10:45:00');
+
+INSERT INTO orders (id, user_id, total_cost, order_time)
+VALUES (2, 1, 89.50, '2023-12-18 09:15:00');
+
+INSERT INTO orders (id, user_id, total_cost, order_time)
+VALUES (3, 1, 120.25, '2023-12-19 14:30:00');
+
+
 -- -- Insert an order with a specific user, total cost, and order time
 -- -- Then Insert join table
 -- INSERT INTO orders (user_id, total_cost, order_time)
 -- VALUES (1, 100.00, '2023-10-17 15:45:00');
 --
--- INSERT INTO orders_ebooks (order_id, ebooks_id)
--- VALUES (1, 1), (1, 2);
+INSERT INTO orders_ebooks (order_id, ebooks_id)
+VALUES (1, 1), (1, 2);
 --
 -- INSERT INTO orders (user_id, total_cost, order_time)
 -- VALUES (2, 200.00, NOW());
 --
--- INSERT INTO orders_ebooks (order_id, ebooks_id)
--- VALUES (2, 3);
+INSERT INTO orders_ebooks (order_id, ebooks_id)
+VALUES (2, 3);
 --
 -- INSERT INTO orders (user_id, total_cost, order_time)
 -- VALUES (3, 20.00, NOW());

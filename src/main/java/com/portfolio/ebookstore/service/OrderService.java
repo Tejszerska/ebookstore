@@ -12,4 +12,4 @@ public interface OrderService {
     List<Ebook> getEbooksFromPastOrders(Long id);
     void placeOrder();
     List<Ebook> getEbooksFromCart(ShoppingCart shoppingCart);
-    OrderDto getOrderById(Long orderId);    }
+    Order getOrderById(Long orderId);    }

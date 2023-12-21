@@ -36,7 +36,7 @@ private final Mappers mappers;
     @GetMapping
     @RequestMapping("/orders/{orderId}")
     public String purchaseDetails(Model model, @PathVariable Long orderId) {
-        OrderDto orderById = orderService.getOrderById(orderId);
+        OrderDto orderById = mappers.orderEntityToDto(orderService.getOrderById(orderId));
         model.addAttribute("orderById", orderById);
         List<Ebook> orderedEbooks = orderService.getEbooksFromPastOrders(orderById.getId());
         model.addAttribute("orderedEbooks", orderedEbooks);
