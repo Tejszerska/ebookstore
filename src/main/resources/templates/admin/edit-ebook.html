@@ -16,7 +16,7 @@
     <span class="h4" th:text="${editedEbook.title}"></span>
     <br><br>
     <div class="row">
-        <form class="form-inline" th:action="@{/admin/ebooks/edit/__${editedEbook.id}__}" th:object="${editedEbook}" method="post"
+        <form class="form-inline" th:action="@{/admin-page/ebooks/edit/__${editedEbook.id}__}" th:object="${editedEbook}" method="post"
               enctype="multipart/form-data">
 
 

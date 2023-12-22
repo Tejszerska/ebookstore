@@ -15,6 +15,7 @@ import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
+
 public class UserController {
     private final UserService userService;
     private final UserDetailsService userDetailsService;

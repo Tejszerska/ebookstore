@@ -30,7 +30,7 @@ public class EbookServiceImpl implements EbookService {
     }
 
     public List<EbookDto> getAvailableEbookDtos() {
-       return getEbookDtos().stream().filter( e -> e.isAvailable()).toList();
+       return getEbookDtos().stream().filter(EbookDto::isAvailable).toList();
     }
 //    public EbookDto getAvailableEbookDtoById(Long ebookId){
 //        EbookDto ebookDto = getEbookDtoById(ebookId);

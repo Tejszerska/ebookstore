@@ -26,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Ebook> getEbooksFromPastOrders(Long id) {
 
         List<Ebook> ebooks = orderRepository.findById(id).map(Order::getEbooks).get();
-        if(!ebooks.isEmpty()) throw new NullPointerException("Ebooks not found.");
+        if(ebooks.isEmpty()) throw new NullPointerException("Ebooks not found.");
         return ebooks;
 
 
