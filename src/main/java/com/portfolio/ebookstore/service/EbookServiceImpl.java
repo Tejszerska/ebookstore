@@ -32,12 +32,13 @@ public class EbookServiceImpl implements EbookService {
     public List<EbookDto> getAvailableEbookDtos() {
        return getEbookDtos().stream().filter(EbookDto::isAvailable).toList();
     }
-//    public EbookDto getAvailableEbookDtoById(Long ebookId){
-//        EbookDto ebookDto = getEbookDtoById(ebookId);
-//        if(ebookDto.isAvailable()){
-//            return ebookDto;
-//        }
-//    }
+
+    public EbookDto getAvailableEbookDtoById(Long ebookId) {
+        EbookDto ebookDto = getEbookDtoById(ebookId);
+        if (ebookDto.isAvailable()) {
+            return ebookDto;
+        } else throw new NullPointerException("No ebook by id : " + ebookId);
+    }
 
 
     public EbookDto getEbookDtoById(Long ebookId) {
