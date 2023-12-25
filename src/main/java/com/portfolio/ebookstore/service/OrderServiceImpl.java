@@ -3,20 +3,23 @@ package com.portfolio.ebookstore.service;
 import com.portfolio.ebookstore.components.ShoppingCart;
 import com.portfolio.ebookstore.entities.Ebook;
 import com.portfolio.ebookstore.entities.Order;
-import com.portfolio.ebookstore.model.dto.OrderDto;
+import com.portfolio.ebookstore.entities.User;
+import com.portfolio.ebookstore.model.dto.UserDto;
 import com.portfolio.ebookstore.repositories.OrderRepository;
-import com.portfolio.ebookstore.service.OrderService;
+import com.portfolio.ebookstore.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final ShoppingCart shoppingCart;
     @Override
     public List<Order> getOrders() {
         return orderRepository.findAll();
@@ -33,8 +36,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void placeOrder() {
+    public void placeOrder(UserDto userDto) {
+        User user = new User();
+        user.setEmail(userDto.getEmail());
+        user.setPassword(null);
+        user.setRole("GUEST");
+       user.setName(user.getName());
+       user.setPastPurchases(null);
 
+        userRepository.save(user);
+
+        Order order = new Order();
+        order.setUser(user);
+        order.setTotalCost(shoppingCart.getTotalCost());
+        order.setOrderTime(LocalDateTime.now());
+        order.setEbooks(getEbooksFromCart(shoppingCart));
+
+        orderRepository.save(order);
     }
 
     @Override
