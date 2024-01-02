@@ -4,7 +4,6 @@ import com.portfolio.ebookstore.components.ShoppingCart;
 import com.portfolio.ebookstore.entities.Ebook;
 import com.portfolio.ebookstore.entities.Order;
 import com.portfolio.ebookstore.entities.User;
-import com.portfolio.ebookstore.model.dto.EbookDto;
 import com.portfolio.ebookstore.model.dto.OrderDto;
 import com.portfolio.ebookstore.model.dto.UserDto;
 import com.portfolio.ebookstore.repositories.EbookRepository;
@@ -12,8 +11,10 @@ import com.portfolio.ebookstore.repositories.OrderRepository;
 import com.portfolio.ebookstore.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void placeOrder(UserDto userDto) {
+    public void guestOrder(UserDto userDto) {
         User user = new User();
-        user.setEmail(userDto.getEmail());
+        user.setEmail(userDto.getEmail() + LocalDateTime.now());
         user.setPassword(null);
         user.setRole("GUEST");
         user.setName(user.getName());
@@ -86,5 +87,21 @@ public class OrderServiceImpl implements OrderService {
             titles.add(ebooksFromPastOrders);
         }
         return null;
+    }
+
+    @Override
+    public void loggedOrder(UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        User user = userRepository.findByEmail(username);
+
+        Order order = Order.builder()
+                .user(user)
+                .orderTime(LocalDateTime.now())
+                .totalCost(shoppingCart.getTotalCost())
+                .ebooks(getEbooksFromCart(shoppingCart))
+                .build();
+
+        orderRepository.save(order);
+
     }
 }

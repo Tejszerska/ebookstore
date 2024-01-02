@@ -56,8 +56,6 @@ public class UserController {
         // LIST OF ORDERS
         List<OrderDto> orders = mappers.orderListEntityToDto(orderService.getOrdersForUser(userDetails.getUsername()));
         model.addAttribute("orders", orders);
-//        List<String> ebooksTitles = orderService.extractTitlesFromOrder(orders);
-//        model.addAttribute("ebooksTitles", ebooksTitles);
         return "/user/user";
     }
 
