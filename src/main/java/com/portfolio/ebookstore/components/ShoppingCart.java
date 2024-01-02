@@ -43,8 +43,8 @@ public class ShoppingCart {
             totalCost = new BigDecimal(0);
         }
         totalCost = totalCost.add(newEbookPrice);
-
     }
+public void editItem(CartItemDto cartItemDto){}
 
     public int getCartSize() {
         if (CollectionUtils.isEmpty(cartItems)) {
