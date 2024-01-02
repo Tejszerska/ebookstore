@@ -10,6 +10,7 @@ import com.portfolio.ebookstore.model.enums.Genre;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,7 @@ public class Mappers {
                         .getId())
                 .userEmail(order.getUser().getEmail())
                 .totalCost(order.getTotalCost())
-                .orderTime(order.getOrderTime().toString())
+                .orderTime(order.getOrderTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .ebooks(order.getEbooks().stream().map(this::mapEbookToDto).collect(Collectors.toList()))
                 .build();
     }

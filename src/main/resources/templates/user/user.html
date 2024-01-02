@@ -10,20 +10,42 @@
 <body>
 <div th:insert="~{fragments/nav-bar::nav}"></div>
 
-    <div class="header">
-        <h1>USER Dashboard</h1>
-    </div>
     <div class="container">
         <h2>Welcome, [[${user.getName()}]]</h2>
         
         <span sec:authorize="isAuthenticated">
         <a th:href="@{/logout}">
          Logout
-        
         </a>
-        
         </span>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">BOUGHT EBOOKS </th>
+                    <th scope="col">TOTAL COST</th>
 
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="order: ${orders}">
+                    <tr>
+                        <td><span th:text="${order.id}"> id </span></td>
+                        <td><span th:text="${order.orderTime}"> date </span></td>
+                        <td><th:block th:each="ebook: ${order.getEbooks()}">
+                            <ul>
+                                <li th:text="${ebook.title}">title</li>
+                            </ul>
+                        </th:block></td>
+                        <td><span th:text="${order.totalCost}"> cost </span></td>
+                        <td><a th:href="@{user-page/orders/__${order.id}__}"  style="width: 100%;" class="btn btn-primary mb-3">Details</a></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

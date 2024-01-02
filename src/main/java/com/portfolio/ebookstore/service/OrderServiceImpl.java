@@ -4,22 +4,30 @@ import com.portfolio.ebookstore.components.ShoppingCart;
 import com.portfolio.ebookstore.entities.Ebook;
 import com.portfolio.ebookstore.entities.Order;
 import com.portfolio.ebookstore.entities.User;
+import com.portfolio.ebookstore.model.dto.EbookDto;
+import com.portfolio.ebookstore.model.dto.OrderDto;
 import com.portfolio.ebookstore.model.dto.UserDto;
+import com.portfolio.ebookstore.repositories.EbookRepository;
 import com.portfolio.ebookstore.repositories.OrderRepository;
 import com.portfolio.ebookstore.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final EbookRepository ebookRepository;
     private final ShoppingCart shoppingCart;
+
     @Override
     public List<Order> getOrders() {
         return orderRepository.findAll();
@@ -27,12 +35,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Ebook> getEbooksFromPastOrders(Long id) {
-
         List<Ebook> ebooks = orderRepository.findById(id).map(Order::getEbooks).get();
-        if(ebooks.isEmpty()) throw new NullPointerException("Ebooks not found.");
+        if (ebooks.isEmpty()) throw new NullPointerException("Ebooks not found.");
         return ebooks;
-
-
     }
 
     @Override
@@ -41,9 +46,8 @@ public class OrderServiceImpl implements OrderService {
         user.setEmail(userDto.getEmail());
         user.setPassword(null);
         user.setRole("GUEST");
-       user.setName(user.getName());
-       user.setPastPurchases(null);
-
+        user.setName(user.getName());
+        user.setPastPurchases(null);
         userRepository.save(user);
 
         Order order = new Order();
@@ -51,13 +55,12 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalCost(shoppingCart.getTotalCost());
         order.setOrderTime(LocalDateTime.now());
         order.setEbooks(getEbooksFromCart(shoppingCart));
-
         orderRepository.save(order);
     }
 
     @Override
     public List<Ebook> getEbooksFromCart(ShoppingCart shoppingCart) {
-        return null;
+        return shoppingCart.getCartItems().stream().map(c -> ebookRepository.findById(c.getEbookDto().getId()).get()).collect(Collectors.toList());
     }
 
     @Override
@@ -66,7 +69,22 @@ public class OrderServiceImpl implements OrderService {
         if (byId.isPresent()) {
             return byId.get();
         } else {
-            throw new NullPointerException("Order by id: " + orderId + " not found." );
+            throw new NullPointerException("Order by id: " + orderId + " not found.");
         }
+    }
+
+    @Override
+    public List<Order> getOrdersForUser(String username) {
+        return getOrders().stream().filter(o -> o.getUser().getEmail().equals(username)).toList();
+    }
+
+    @Override
+    public List<String> extractTitlesFromOrder(List<OrderDto> orders) {
+        List<List <Ebook> > titles = new ArrayList<>();
+        for(OrderDto order: orders){
+            List<Ebook> ebooksFromPastOrders = getEbooksFromPastOrders(order.getId());
+            titles.add(ebooksFromPastOrders);
+        }
+        return null;
     }
 }
