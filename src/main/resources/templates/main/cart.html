@@ -21,9 +21,10 @@
             <table class="table">
 
                 <tr>
-                    <th scope="col" style="width: 70%">Ebook</th>
+                    <th scope="col" style="width: 50%">Ebook</th>
                     <th scope="col" style="width: 10%">Quantity</th>
-                    <th scope="col" style="width: 20%">Price</th>
+                    <th scope="col" style="width: 30%">Change</th>
+                    <th scope="col" style="width: 10%">Price</th>
 
                 </tr>
 
@@ -32,6 +33,12 @@
                     <tr>
                         <td th:text="${cartItem.ebookDto.title}"></td>
                         <td th:text="${cartItem.quantity}"></td>
+                        <td>
+                            <form th:action="@{/ebookstore/cart/add-in-cart}" method="post" class ="col-6">
+                                <input type="hidden" name="ebookId" th:value="${cartItem.ebookDto.id}"/>
+                                <button type="submit" class="btn btn-success ">+</button>
+                            </form>
+                        </td>
                         <td th:text="${cartItem.totalCost.toString()} + ' $'"></td>
                     </tr>
 

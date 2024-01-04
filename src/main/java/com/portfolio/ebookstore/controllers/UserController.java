@@ -48,7 +48,7 @@ public class UserController {
         return "/user/login";
     }
 
-    // USER PAGE WITH THE LIST OF PAST ORDERS
+    // USER PAGE WITH THE LIST OF PAST ORDERS j
     @GetMapping("/user-page")
     public String userPage(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());

@@ -44,7 +44,11 @@ public class ShoppingCart {
         }
         totalCost = totalCost.add(newEbookPrice);
     }
-public void editItem(CartItemDto cartItemDto){}
+    public void deleteOneItem(CartItemDto cartItemDto){
+//        if(cartItems.contains(cartItemDto)){
+//            cartItemDto.setQuantity(+1);
+//        }
+    }
 
     public int getCartSize() {
         if (CollectionUtils.isEmpty(cartItems)) {

@@ -1,6 +1,7 @@
 package com.portfolio.ebookstore.controllers;
 
 import com.portfolio.ebookstore.components.ShoppingCart;
+import com.portfolio.ebookstore.model.dto.CartItemDto;
 import com.portfolio.ebookstore.model.dto.EbookDto;
 import com.portfolio.ebookstore.model.dto.UserDto;
 import com.portfolio.ebookstore.service.EbookService;
@@ -37,8 +38,12 @@ public class ShoppingCartController {
         return "main/cart";
     }
 
-
-
+    @PostMapping("/add-in-cart")
+    public String addItemInCart(@RequestParam(name = "ebookId") Long ebookId) {
+        EbookDto ebookDto = ebookService.getEbookDtoById(ebookId);
+        shoppingCart.addItem(ebookDto);
+        return "redirect:/ebookstore/cart";
+    }
     @PostMapping("/add")
     public String addItem(@RequestParam(name = "ebookId") Long ebookId) {
         EbookDto ebookDto = ebookService.getEbookDtoById(ebookId);
@@ -53,9 +58,7 @@ public class ShoppingCartController {
         orderService.guestOrder(userDto);
         return "redirect:/ebookstore/cart";
     }
-//    Principal principal) {
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-//        model.addAttribute("user", userDetails);
+
     @PostMapping
     @RequestMapping("/place-order")
     public String loggedOrder(Model model, Principal principal) {
