@@ -37,6 +37,18 @@ public class ShoppingCartController {
         model.addAttribute("cartSize", cartSize);
         return "main/cart";
     }
+    @PostMapping("/remove-in-cart")
+    public String removeItemInCart(@RequestParam(name = "ebookId") Long ebookId) {
+        EbookDto ebookDto = ebookService.getEbookDtoById(ebookId);
+        shoppingCart.removeItem(ebookDto);
+        return "redirect:/ebookstore/cart";
+    }
+    @PostMapping("/subtract-in-cart")
+    public String subtractItemInCart(@RequestParam(name = "ebookId") Long ebookId) {
+        EbookDto ebookDto = ebookService.getEbookDtoById(ebookId);
+        shoppingCart.subtractItem(ebookDto);
+        return "redirect:/ebookstore/cart";
+    }
 
     @PostMapping("/add-in-cart")
     public String addItemInCart(@RequestParam(name = "ebookId") Long ebookId) {
@@ -51,7 +63,7 @@ public class ShoppingCartController {
         return "redirect:/ebookstore";
     }
 
-    //@TODO cart empty after ordering, change cartitem
+    //@TODO cart empty after ordering
     @PostMapping
     @RequestMapping("/guest/place-order")
     public String guestOrder(UserDto userDto) {
@@ -65,6 +77,15 @@ public class ShoppingCartController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("user", userDetails);
         orderService.loggedOrder(userDetails);
+        shoppingCart.clearCart();
         return "redirect:/ebookstore/cart";
     }
+
+    @PostMapping
+    @RequestMapping("/clear-cart")
+    public String clearCart() {
+        shoppingCart.clearCart();
+        return "redirect:/ebookstore/cart";
+    }
+
 }

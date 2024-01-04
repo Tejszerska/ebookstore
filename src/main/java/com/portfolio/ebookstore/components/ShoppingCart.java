@@ -44,11 +44,7 @@ public class ShoppingCart {
         }
         totalCost = totalCost.add(newEbookPrice);
     }
-    public void deleteOneItem(CartItemDto cartItemDto){
-//        if(cartItems.contains(cartItemDto)){
-//            cartItemDto.setQuantity(+1);
-//        }
-    }
+
 
     public int getCartSize() {
         if (CollectionUtils.isEmpty(cartItems)) {
@@ -62,4 +58,27 @@ public class ShoppingCart {
         }
     }
 
+    public void subtractItem(EbookDto ebookDto) {
+        Optional<CartItemDto> ebookInTheCart = cartItems.stream().filter(c -> c.getEbookDto().getId().equals(ebookDto.getId())).findFirst();
+        if (ebookInTheCart.isPresent()) {
+            if (ebookInTheCart.get().getQuantity() > 1) {
+                ebookInTheCart.get().setQuantity(ebookInTheCart.get().getQuantity() - 1);
+                ebookInTheCart.get().setTotalCost(ebookInTheCart.get().getTotalCost().subtract(ebookDto.getSellingPrice()));
+                totalCost = totalCost.subtract(ebookDto.getSellingPrice());
+            } else removeItem(ebookDto);
+        }
+    }
+
+    public void removeItem(EbookDto ebookDto) {
+        Optional<CartItemDto> ebookInTheCart = cartItems.stream().filter(c -> c.getEbookDto().getId().equals(ebookDto.getId())).findFirst();
+        if (ebookInTheCart.isPresent()) {
+            cartItems.remove(ebookInTheCart.get());
+            totalCost = totalCost.subtract(ebookInTheCart.get().getTotalCost());
+        }
+    }
+
+    public void clearCart(){
+        cartItems = null;
+        totalCost= BigDecimal.valueOf(0);
+    }
 }
