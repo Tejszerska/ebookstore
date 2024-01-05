@@ -21,6 +21,23 @@ public class ShoppingCart {
     private List<CartItemDto> cartItems;
     private BigDecimal totalCost;
 
+    public int getCartSize() {
+        if (CollectionUtils.isEmpty(cartItems)) {
+            return 0;
+        } else {
+            int total = 0;
+            for (CartItemDto cartItemDto : cartItems) {
+                total = total + cartItemDto.getQuantity();
+            }
+            return total;
+        }
+    }
+
+    public void clearCart() {
+        cartItems = null;
+        totalCost = BigDecimal.valueOf(0);
+    }
+
     public void addItem(EbookDto ebookDto) {
         if (cartItems == null) {
             cartItems = new ArrayList<>();
@@ -45,19 +62,6 @@ public class ShoppingCart {
         totalCost = totalCost.add(newEbookPrice);
     }
 
-
-    public int getCartSize() {
-        if (CollectionUtils.isEmpty(cartItems)) {
-            return 0;
-        } else {
-            int total = 0;
-            for (CartItemDto cartItemDto : cartItems) {
-                total = total + cartItemDto.getQuantity();
-            }
-            return total;
-        }
-    }
-
     public void subtractItem(EbookDto ebookDto) {
         Optional<CartItemDto> ebookInTheCart = cartItems.stream().filter(c -> c.getEbookDto().getId().equals(ebookDto.getId())).findFirst();
         if (ebookInTheCart.isPresent()) {
@@ -75,10 +79,5 @@ public class ShoppingCart {
             cartItems.remove(ebookInTheCart.get());
             totalCost = totalCost.subtract(ebookInTheCart.get().getTotalCost());
         }
-    }
-
-    public void clearCart(){
-        cartItems = null;
-        totalCost= BigDecimal.valueOf(0);
     }
 }

@@ -22,41 +22,28 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 	private final CustomSuccessHandler customSuccessHandler;
 	private final CustomUserDetailsService customUserDetailsService;
-	
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-
 		http.csrf(AbstractHttpConfigurer::disable)
-
 				.authorizeHttpRequests(request -> request
 						.requestMatchers("/admin-page/**").hasAuthority("ADMIN")
 						.requestMatchers("/user-page").hasAuthority("USER")
 						.requestMatchers( "/ebookstore/**",  "*/login", "*/error", "*/login-error", "*/logout", "/img/*", "/bootstrap.css", "/style.css").permitAll()
 						.anyRequest().authenticated())
-
-		
 		.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
 				.successHandler(customSuccessHandler).permitAll())
-
 		.logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/login?logout").permitAll());
 
 		return http.build();
-		
 	}
-
-
-	
 	@Autowired
 	public void configure (AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
 	}
-
 }

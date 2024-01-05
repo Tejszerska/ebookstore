@@ -1,7 +1,5 @@
 package com.portfolio.ebookstore.controllers;
-
 import com.portfolio.ebookstore.components.ShoppingCart;
-import com.portfolio.ebookstore.model.dto.CartItemDto;
 import com.portfolio.ebookstore.model.dto.EbookDto;
 import com.portfolio.ebookstore.model.dto.UserDto;
 import com.portfolio.ebookstore.service.EbookService;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.security.Principal;
 
 @Controller
@@ -27,8 +24,15 @@ public class ShoppingCartController {
     private final OrderService orderService;
     private final CustomUserDetailsService userDetailsService;
     boolean ordered = false;
-
-
+    // ADD TO THE CART
+    @PostMapping("/add")
+    public String addItem(@RequestParam(name = "ebookId") Long ebookId) {
+        ordered = false;
+        EbookDto ebookDto = ebookService.getEbookDtoById(ebookId);
+        shoppingCart.addItem(ebookDto);
+        return "redirect:/ebookstore";
+    }
+    // CART VIEW
     @GetMapping
     public String showCart(Model model) {
         model.addAttribute("userDto", new UserDto());
@@ -39,6 +43,7 @@ public class ShoppingCartController {
         model.addAttribute("ordered", ordered);
         return "main/cart";
     }
+    //CHANGING CART ITEMS QUANTITY
     @PostMapping("/remove-in-cart")
     public String removeItemInCart(@RequestParam(name = "ebookId") Long ebookId) {
         EbookDto ebookDto = ebookService.getEbookDtoById(ebookId);
@@ -58,24 +63,22 @@ public class ShoppingCartController {
         shoppingCart.addItem(ebookDto);
         return "redirect:/ebookstore/cart";
     }
-    @PostMapping("/add")
-    public String addItem(@RequestParam(name = "ebookId") Long ebookId) {
-        EbookDto ebookDto = ebookService.getEbookDtoById(ebookId);
-        shoppingCart.addItem(ebookDto);
-        return "redirect:/ebookstore";
-    }
-
     @PostMapping
-    @RequestMapping("/guest/place-order")
+    @RequestMapping("/clear-cart") //@TODO Stackoverflow spytać czemu nie działa @PostMapping("...") - 405
+    public String clearCart() {
+        shoppingCart.clearCart();
+        return "redirect:/ebookstore/cart";
+    }
+    // FINALIZING ORDER
+    @PostMapping("/guest/place-order")
     public String guestOrder(UserDto userDto) {
         orderService.guestOrder(userDto);
         shoppingCart.clearCart();
         ordered = true;
         return "redirect:/ebookstore/cart";
     }
-
     @PostMapping
-    @RequestMapping("/place-order")
+    @RequestMapping("/place-order") //@TODO Stackoverflow spytać czemu nie działa @PostMapping("...") - 405
     public String loggedOrder(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("user", userDetails);
@@ -84,12 +87,4 @@ public class ShoppingCartController {
         ordered = true;
         return "redirect:/ebookstore/cart";
     }
-
-    @PostMapping
-    @RequestMapping("/clear-cart")
-    public String clearCart() {
-        shoppingCart.clearCart();
-        return "redirect:/ebookstore/cart";
-    }
-
 }
