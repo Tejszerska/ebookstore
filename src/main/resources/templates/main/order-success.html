@@ -12,13 +12,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="text-center my-3" th:if="${ordered}">
-            <h1>Order placed successfully !</h1>
-        </div>
-    </div>
-    <div class="row">
         <div class="text-center my-3" th:if="${cartItems == null}">
-            <h1>Your cart is empty!</h1>
+            <h1>Order placed successfully !</h1>
         </div>
 
         <div th:if="${cartItems != null && cartItems.size() > 0}">
@@ -80,6 +75,12 @@
                         <label for="email" class="form-label">E-mail</label>
                         <input type="text" class="form-control" id="email" th:field="*{email}">
                     </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name </label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}">
+                    </div>
+
 
                     <div class="mb-3">
                         <div class="form-check">

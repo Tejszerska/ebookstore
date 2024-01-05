@@ -1,6 +1,7 @@
 package com.portfolio.ebookstore.controllers;
 
 import com.portfolio.ebookstore.components.Mappers;
+import com.portfolio.ebookstore.components.ShoppingCart;
 import com.portfolio.ebookstore.entities.Ebook;
 import com.portfolio.ebookstore.model.dto.EbookDto;
 import com.portfolio.ebookstore.model.dto.OrderDto;
@@ -28,10 +29,14 @@ public class UserController {
     private final OrderService orderService;
     private final UserDetailsService userDetailsService;
     private final Mappers mappers;
+    private final ShoppingCart shoppingCart;
 
     // REGISTER
     @GetMapping("ebookstore/registration")
-    public String getRegistrationView(@ModelAttribute("user") UserDto userDto) {
+    public String getRegistrationView(@ModelAttribute("user") UserDto userDto, Model model) {
+        // CART SIZE
+        int cartSize = shoppingCart.getCartSize();
+        model.addAttribute("cartSize", cartSize);
         return "/user/register";
     }
 
@@ -48,7 +53,7 @@ public class UserController {
         return "/user/login";
     }
 
-    // USER PAGE WITH THE LIST OF PAST ORDERS j
+    // USER PAGE WITH THE LIST OF PAST ORDERS
     @GetMapping("/user-page")
     public String userPage(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
@@ -56,6 +61,9 @@ public class UserController {
         // LIST OF ORDERS
         List<OrderDto> orders = mappers.orderListEntityToDto(orderService.getOrdersForUser(userDetails.getUsername()));
         model.addAttribute("orders", orders);
+        // CART SIZE
+        int cartSize = shoppingCart.getCartSize();
+        model.addAttribute("cartSize", cartSize);
         return "/user/user";
     }
 
@@ -66,6 +74,9 @@ public class UserController {
         model.addAttribute("orderById", orderById);
         List<Ebook> orderedEbooks = orderService.getEbooksFromPastOrders(orderId);
         model.addAttribute("orderedEbooks", orderedEbooks);
+        // CART SIZE
+        int cartSize = shoppingCart.getCartSize();
+        model.addAttribute("cartSize", cartSize);
         return "/user/order-details";
     }
 }

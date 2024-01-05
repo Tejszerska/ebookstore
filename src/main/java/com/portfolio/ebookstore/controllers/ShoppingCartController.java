@@ -26,6 +26,7 @@ public class ShoppingCartController {
     public final ShoppingCart shoppingCart;
     private final OrderService orderService;
     private final CustomUserDetailsService userDetailsService;
+    boolean ordered = false;
 
 
     @GetMapping
@@ -35,6 +36,7 @@ public class ShoppingCartController {
         model.addAttribute("totalCost", shoppingCart.getTotalCost() != null ? shoppingCart.getTotalCost().toString() : "0");
         int cartSize = shoppingCart.getCartSize();
         model.addAttribute("cartSize", cartSize);
+        model.addAttribute("ordered", ordered);
         return "main/cart";
     }
     @PostMapping("/remove-in-cart")
@@ -63,11 +65,12 @@ public class ShoppingCartController {
         return "redirect:/ebookstore";
     }
 
-    //@TODO cart empty after ordering
     @PostMapping
     @RequestMapping("/guest/place-order")
     public String guestOrder(UserDto userDto) {
         orderService.guestOrder(userDto);
+        shoppingCart.clearCart();
+        ordered = true;
         return "redirect:/ebookstore/cart";
     }
 
@@ -78,6 +81,7 @@ public class ShoppingCartController {
         model.addAttribute("user", userDetails);
         orderService.loggedOrder(userDetails);
         shoppingCart.clearCart();
+        ordered = true;
         return "redirect:/ebookstore/cart";
     }
 
