@@ -21,14 +21,19 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" th:href="@{/ebookstore/registration}">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" th:href="@{/admin-page}">Admin's panel</a>
+                <a class="nav-link active" aria-current="page" th:href="@{/admin-page}">Admin panel</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" th:href="@{/user-page}">User's panel</a>
+                <a class="nav-link active" aria-current="page" th:href="@{/admin-page/ebooks/add-view}">Add ebook</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" th:href="@{/admin-page/orders}">Show orders</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" th:href="@{/admin-page/ebooks}" >Show ebooks</a>
             </li>
         </ul>
 
@@ -58,11 +63,6 @@
             <button type="submit" class="btn btn-primary col-auto" style="background-color: rgb(207, 234, 208)">Login
             </button>
         </form>
-
-
-        <a th:href="@{/ebookstore/cart}" class="btn btn-outline-light mx-3" type="submit">Cart
-            <span class="badge" th:text="${cartSize}"></span>
-        </a>
     </div>
 </nav>
 

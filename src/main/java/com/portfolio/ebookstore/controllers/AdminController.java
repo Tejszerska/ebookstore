@@ -75,7 +75,7 @@ public class AdminController {
     public String addEbook(EbookDto ebookDto, @RequestParam("image") MultipartFile file) {
         ebookDto.setImageName(file.getOriginalFilename());
         ebookService.addEbook(ebookDto, file);
-        return "redirect:/admin/ebooks/add-view";
+        return "redirect:/admin-page/ebooks/add-view";
     }
 
     @GetMapping
