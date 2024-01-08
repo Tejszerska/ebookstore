@@ -38,16 +38,16 @@
             <td><span th:text="${order.getUserEmail()}"> email </span></td>
             <td><span th:text="${order.totalCost}"> cost </span></td>
             <td><span th:text="${order.orderTime}"> date </span></td>
-            <td><a th:href="@{orders/__${order.id}__}"  style="width: 100%;" class="btn btn-primary mb-3">Details</a></td>
+            <td><a th:href="@{orders/__${order.id}__}"  style="width: 100%;" class="btn btn-success mb-3">Details</a></td>
         </tr>
         </th:block>
         </tbody>
     </table>
 
 
-<!--    <a th:href="@{/admin/panel/add-view}"  style="width: 100%;" class="btn btn-primary mb-3">Add ebook</a>-->
+<!--    <a th:href="@{/admin/panel/add-view}"  style="width: 100%;" class="btn btn-success mb-3">Add ebook</a>-->
 
-<!--    <a th:href=""  style="width: 100%;" class="btn btn-primary mb-3">Show recent purchases</a>-->
+<!--    <a th:href=""  style="width: 100%;" class="btn btn-success mb-3">Show recent purchases</a>-->
 </div>
 
 

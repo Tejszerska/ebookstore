@@ -37,7 +37,7 @@
             </li>
         </ul>
 
-        <a th:href="@{/logout}" sec:authorize="isAuthenticated" class="btn btn-primary col-auto"
+        <a th:href="@{/logout}" sec:authorize="isAuthenticated" class="btn btn-success col-auto"
            style="background-color: rgb(207, 234, 208)">Logout</a>
 
         <form sec:authorize="!isAuthenticated" th:action="@{/login}" method="post"
@@ -60,7 +60,7 @@
                        class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-primary col-auto" style="background-color: rgb(207, 234, 208)">Login
+            <button type="submit" class="btn btn-success col-auto" style="background-color: rgb(207, 234, 208)">Login
             </button>
         </form>
     </div>
