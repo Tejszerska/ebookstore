@@ -57,7 +57,7 @@ public class Mappers {
                 .userEmail(order.getUser().getEmail())
                 .totalCost(order.getTotalCost())
                 .orderTime(order.getOrderTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                .ebooks(order.getEbooks().stream().map(this::mapEbookToDto).collect(Collectors.toList()))
+                .ebooks(order.getEbooks().stream().map(this::ebookEntityToDto).collect(Collectors.toList()))
                 .build();
     }
 
@@ -71,11 +71,11 @@ public class Mappers {
                 .id(orderDto.getId())
                 .totalCost(orderDto.getTotalCost())
                 .orderTime(LocalDateTime.parse(orderDto.getOrderTime()))
-                .ebooks(orderDto.getEbooks().stream().map(this::mapDtoToEbook).collect(Collectors.toList()))
+                .ebooks(orderDto.getEbooks().stream().map(this::ebookDtoToEntity).collect(Collectors.toList()))
                 .build();
     }
 
-    public EbookDto mapEbookToDto(Ebook ebook) {
+    public EbookDto ebookEntityToDto(Ebook ebook) {
         return EbookDto.builder()
                 .id(ebook.getId())
                 .title(ebook.getTitle())
@@ -90,7 +90,7 @@ public class Mappers {
                 .build();
     }
 
-    public Ebook mapDtoToEbook(EbookDto ebookDto) {
+    public Ebook ebookDtoToEntity(EbookDto ebookDto) {
         return Ebook.builder()
                 .id(ebookDto.getId())
                 .title(ebookDto.getTitle())
@@ -104,6 +104,8 @@ public class Mappers {
                 .isAvailable(ebookDto.isAvailable())
                 .build();
     }
-
+    public List<EbookDto> ebookListEntityToDto(List<Ebook> ebookList){
+        return ebookList.stream().map(this::ebookEntityToDto).toList();
+    }
 }
 

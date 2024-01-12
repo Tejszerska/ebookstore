@@ -109,4 +109,9 @@ public class EbookServiceImpl implements EbookService {
 
     }
 
+    @Override
+    public List<Ebook> searchingForEbook(String keyword) {
+        return ebookRepository.findAllByTitleContaining(keyword);
+    }
+
 }

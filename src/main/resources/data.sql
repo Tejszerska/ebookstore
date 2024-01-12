@@ -1,6 +1,9 @@
 -- noinspection SqlDialectInspectionForFile
 
 -- noinspection SqlNoDataSourceInspectionForFile
+-- index for searching in ebooks
+CREATE INDEX ebook_idx
+    ON ebooks (authors, title);
 
 -- Insert records into the Ebooks table
     INSERT INTO ebooks (title, authors, publisher, image_name, description, genre, selling_price, purchase_cost, is_available)

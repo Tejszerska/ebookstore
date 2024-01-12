@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link th:href="@{/bootstrap.css}" rel="stylesheet">
@@ -11,20 +10,14 @@
 <body>
 <div th:insert="~{fragments/nav-bar::nav}"></div>
 
-
 <div class="container">
-
-    <form action="#" th:action="@{/ebookstore/search}" method="get" class="row my-2">
-        <div class="form-group ms-auto col-9">
-            <input type="text" name="keyword" placeholder="Search for an ebook" class="form-control col-5">
-        </div>
-        <div class="form-group  me-auto col-2">
-            <button class="btn btn-success" type="submit">Search</button>
-        </div>
-    </form>
+    <h1>Ebook Store App</h1>
 
     <div class="row">
-        <th:block th:each="ebook: ${ebooks}">
+        <div th:if="${searchResult.empty}">
+            <h2>"<span th:text="${keyword}"></span>" not found</h2>
+        </div>
+        <th:block th:each="ebook: ${searchResult}">
             <div class="col-3">
                 <div class="mx-auto" style="width: 18rem;">
 
@@ -37,8 +30,7 @@
                             <p style="display: inline" th:text="${ebook.sellingPrice}">Ebook's price </p>
                             <span> zł </span><br>
                             <div class="row">
-                                <a th:href="@{/ebookstore/details/__${ebook.id}__}"
-                                   class="btn btn-success col-6">Details</a>
+                                <a th:href="@{/ebookstore/details/__${ebook.id}__}" class="btn btn-success col-6">Details</a>
                                 <form th:action="@{/ebookstore/cart/add}" method="post" class="col-6">
                                     <input type="hidden" name="ebookId" th:value="${ebook.id}"/>
                                     <button type="submit" class="btn btn-success ">Add to cart</button>

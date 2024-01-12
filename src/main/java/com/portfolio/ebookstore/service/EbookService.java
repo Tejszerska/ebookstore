@@ -15,5 +15,6 @@ public interface EbookService {
     Ebook editEbook(EbookDto ebookDto, Long ebookId);
     void editEbookWithoutCover(EbookDto ebookDto, Long ebookId);
     void editEbookWithCover(EbookDto ebookDto, Long ebookId, MultipartFile file);
+    List<Ebook> searchingForEbook(String keyword);
 
 }

@@ -1,5 +1,6 @@
 package com.portfolio.ebookstore.controllers;
 
+import com.portfolio.ebookstore.components.Mappers;
 import com.portfolio.ebookstore.components.ShoppingCart;
 import com.portfolio.ebookstore.model.dto.EbookDto;
 import com.portfolio.ebookstore.service.EbookService;
@@ -7,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Controller
@@ -19,6 +18,7 @@ import java.util.List;
 public class MainViewController {
     private final EbookService ebookService;
     private final ShoppingCart shoppingCart;
+    private final Mappers mappers;
     @GetMapping
     public String ebook(Model model) {
         List<EbookDto> availableEbookDtosFromDb = ebookService.getAvailableEbookDtos();
@@ -35,5 +35,15 @@ public class MainViewController {
         model.addAttribute("cartSize", cartSize);
         return "main/ebook-details";
     }
+
+    @GetMapping("/search")
+    public String addEbook(@RequestParam("keyword") String keyword, Model model) {
+        List<EbookDto> searchResult = mappers.ebookListEntityToDto(ebookService.searchingForEbook(keyword));
+        model.addAttribute("searchResult", searchResult);
+        model.addAttribute("keyword", keyword);
+        return "main/search";
+    }
+
+
 
 }
