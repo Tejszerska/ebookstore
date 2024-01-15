@@ -37,11 +37,11 @@ public class MainViewController {
     }
 
     @GetMapping("/search")
-    public String addEbook(@RequestParam("keyword") String keyword, Model model) {
+    public String ebookSearch(@RequestParam("keyword") String keyword, Model model) {
         List<EbookDto> searchResult = mappers.ebookListEntityToDto(ebookService.searchingForEbook(keyword));
         model.addAttribute("searchResult", searchResult);
         model.addAttribute("keyword", keyword);
-        return "main/search";
+        return "main/search-results";
     }
 
 

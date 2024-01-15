@@ -13,10 +13,20 @@
 <div class="container">
     <h1>Ebook Store App</h1>
 
+    <form action="#" th:action="@{/ebookstore/search}" method="get" class="row my-2">
+        <div class="form-group ms-auto col-9">
+            <input type="text" name="keyword" placeholder="Search for an ebook" class="form-control col-5">
+        </div>
+        <div class="form-group  me-auto col-2">
+            <button class="btn btn-success" type="submit">Search</button>
+        </div>
+    </form>
+
     <div class="row">
         <div th:if="${searchResult.empty}">
             <h2>"<span th:text="${keyword}"></span>" not found</h2>
         </div>
+
         <th:block th:each="ebook: ${searchResult}">
             <div class="col-3">
                 <div class="mx-auto" style="width: 18rem;">
@@ -38,7 +48,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </th:block>

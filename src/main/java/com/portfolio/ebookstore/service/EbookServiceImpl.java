@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -111,7 +112,14 @@ public class EbookServiceImpl implements EbookService {
 
     @Override
     public List<Ebook> searchingForEbook(String keyword) {
-        return ebookRepository.findAllByTitleContaining(keyword);
+        List<Ebook> allByTitleContaining = ebookRepository.findAllByTitleContaining(keyword);
+        List<Ebook> allByAuthorsContaining = ebookRepository.findAllByAuthorsContaining(keyword);
+        List<Ebook> allByPublisherContaining = ebookRepository.findAllByPublisherContaining(keyword);
+        List<Ebook> results = new ArrayList<>();
+        results.addAll(allByTitleContaining);
+        results.addAll(allByAuthorsContaining);
+        results.addAll(allByPublisherContaining);
+        return results;
     }
 
 }

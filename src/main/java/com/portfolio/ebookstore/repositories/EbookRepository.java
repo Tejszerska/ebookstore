@@ -11,4 +11,7 @@ import java.util.List;
 public interface EbookRepository extends JpaRepository<Ebook, Long> {
 
     List<Ebook> findAllByTitleContaining(String keyword);
+    List<Ebook> findAllByAuthorsContaining(String keyword);
+    List<Ebook> findAllByPublisherContaining(String keyword);
+    List<Ebook> findAllByGenreContaining(String keyword);
 }
