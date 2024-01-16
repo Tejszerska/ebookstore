@@ -4,7 +4,6 @@ import com.portfolio.ebookstore.components.ShoppingCart;
 import com.portfolio.ebookstore.entities.Ebook;
 import com.portfolio.ebookstore.entities.Order;
 import com.portfolio.ebookstore.entities.User;
-import com.portfolio.ebookstore.model.dto.OrderDto;
 import com.portfolio.ebookstore.model.dto.UserDto;
 import com.portfolio.ebookstore.repositories.EbookRepository;
 import com.portfolio.ebookstore.repositories.OrderRepository;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,16 +78,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<String> extractTitlesFromOrder(List<OrderDto> orders) {
-        List<List <Ebook> > titles = new ArrayList<>();
-        for(OrderDto order: orders){
-            List<Ebook> ebooksFromPastOrders = getEbooksFromPastOrders(order.getId());
-            titles.add(ebooksFromPastOrders);
-        }
-        return null;
-    }
-
-    @Override
     public void loggedOrder(UserDetails userDetails) {
         String username = userDetails.getUsername();
         User user = userRepository.findByEmail(username);
@@ -104,4 +92,28 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
 
     }
+
+    @Override
+    public List<Order> searchForOrder(String keyword, String criteria) {
+        switch (criteria){
+            case "id":
+               return orderRepository.findAllById(Long.valueOf(keyword));
+            case "userFull":
+                User user = userRepository.findByEmail(keyword);
+                return orderRepository.findAllByUser(user);
+            case "userContaining":
+                List<User> allByEmailContaining = userRepository.findAllByEmailContaining(keyword);
+                List<Order> ordersByUserContaining = new ArrayList<>();
+                for (User u : allByEmailContaining) {
+                    List<Order> allByUser = orderRepository.findAllByUser(u);
+                    ordersByUserContaining.addAll(allByUser);
+                }
+                return ordersByUserContaining;
+            case "date":
+
+            default:
+                return new ArrayList<>();
+        }
+    }
+
 }

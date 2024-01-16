@@ -114,4 +114,13 @@ public class AdminController {
         model.addAttribute("keyword", keyword);
         return "/admin/ebooks-search";
     }
+
+    @GetMapping("/orders/search")
+    public String orderSearch(Model model,
+                              @RequestParam("keyword") String keyword,
+                              @RequestParam("criteria") String criteria) {
+        List<OrderDto> searchResult = mappers.orderListEntityToDto(orderService.searchForOrder(keyword, criteria));
+        model.addAttribute("searchResult", searchResult);
+        return "/admin/orders-search";
+    }
 }
