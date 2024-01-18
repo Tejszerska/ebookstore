@@ -11,11 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomUserDetail implements UserDetails {
    private User user;
-
-
-    @Override
+       @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
         return List.of(() -> user.getRole());
     }
 

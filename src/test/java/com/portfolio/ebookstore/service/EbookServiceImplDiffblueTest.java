@@ -612,5 +612,30 @@ class EbookServiceImplDiffblueTest {
                 new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes("UTF-8")))));
         verify(ebookRepository).findById(Mockito.<Long>any());
     }
+
+    /**
+     * Method under test: {@link EbookServiceImpl#searchingForEbook(String)}
+     */
+    @Test
+    void testSearchingForEbook() {
+        when(ebookRepository.findAllByAuthorsContaining(Mockito.<String>any())).thenReturn(new ArrayList<>());
+        when(ebookRepository.findAllByPublisherContaining(Mockito.<String>any())).thenReturn(new ArrayList<>());
+        when(ebookRepository.findAllByTitleContaining(Mockito.<String>any())).thenReturn(new ArrayList<>());
+        assertTrue(ebookServiceImpl.searchingForEbook("Keyword").isEmpty());
+        verify(ebookRepository).findAllByAuthorsContaining(Mockito.<String>any());
+        verify(ebookRepository).findAllByPublisherContaining(Mockito.<String>any());
+        verify(ebookRepository).findAllByTitleContaining(Mockito.<String>any());
+    }
+
+    /**
+     * Method under test: {@link EbookServiceImpl#searchingForEbook(String)}
+     */
+    @Test
+    void testSearchingForEbook2() {
+        when(ebookRepository.findAllByTitleContaining(Mockito.<String>any()))
+                .thenThrow(new IllegalArgumentException("foo"));
+        assertThrows(IllegalArgumentException.class, () -> ebookServiceImpl.searchingForEbook("Keyword"));
+        verify(ebookRepository).findAllByTitleContaining(Mockito.<String>any());
+    }
 }
 

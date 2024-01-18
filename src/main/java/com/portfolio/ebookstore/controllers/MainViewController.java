@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 @Controller
 @Slf4j
@@ -35,7 +34,6 @@ public class MainViewController {
         model.addAttribute("cartSize", cartSize);
         return "main/ebook-details";
     }
-
     @GetMapping("/search")
     public String ebookSearch(@RequestParam("keyword") String keyword, Model model) {
         List<EbookDto> searchResult = mappers.ebookListEntityToDto(ebookService.searchingForEbook(keyword));
@@ -43,7 +41,4 @@ public class MainViewController {
         model.addAttribute("keyword", keyword);
         return "main/search-results";
     }
-
-
-
 }

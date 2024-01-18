@@ -1,7 +1,5 @@
 package com.portfolio.ebookstore.model.dto;
 
-import com.portfolio.ebookstore.model.enums.Genre;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

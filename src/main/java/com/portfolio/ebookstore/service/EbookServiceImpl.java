@@ -66,8 +66,6 @@ public class EbookServiceImpl implements EbookService {
 
     public void coverUpload(MultipartFile file) {
         Path img = Paths.get("src/main/resources/static/img");
-
-        // Check if the uploads directory exists, create it if not
         if (!Files.exists(img)) {
             try {
                 Files.createDirectories(img);

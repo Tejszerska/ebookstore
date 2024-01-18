@@ -11,9 +11,8 @@
 <body>
 <div th:insert="~{fragments/nav-bar-admin::nav}"></div>
 
-<div class="container" style="margin-top:100px;">
-    <h2>New ebook adding</h2>
-    <h3>All the fields must be filled. You can edit them later.</h3>
+<div class="container">
+    <h2>Adding new ebook</h2>
     <div class="row">
         <form th:action="@{/admin-page/ebooks/add}" th:object="${newEbook}" method="post" enctype="multipart/form-data">
 
@@ -44,7 +43,6 @@
                 <label for="description" class="form-label">Description</label>
                 <input type="text" class="form-control" id="description" th:field="*{description}">
             </div>
-
             <div class="mb-3">
                 <label for="genre" class="form-label">Genre</label>
                 <select class="form-control" th:field="*{genre}" id="genre">

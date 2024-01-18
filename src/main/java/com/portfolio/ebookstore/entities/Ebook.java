@@ -3,9 +3,7 @@ package com.portfolio.ebookstore.entities;
 import com.portfolio.ebookstore.model.enums.Genre;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.math.BigDecimal;
-
 @Entity
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
@@ -22,6 +20,7 @@ public class Ebook {
     private String publisher;
     private String imageName;
     private String description;
+    @NonNull
     @Enumerated(EnumType.STRING)
     private Genre genre;
     @NonNull

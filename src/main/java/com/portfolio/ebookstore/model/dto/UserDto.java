@@ -18,6 +18,4 @@ public class UserDto {
     private String role;
     private String name;
     private List<OrderDto> pastPurchases;
-
-
 }

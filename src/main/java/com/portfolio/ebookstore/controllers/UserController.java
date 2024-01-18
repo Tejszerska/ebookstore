@@ -30,8 +30,6 @@ public class UserController {
     private final UserDetailsService userDetailsService;
     private final Mappers mappers;
     private final ShoppingCart shoppingCart;
-
-    // REGISTER
     @GetMapping("ebookstore/registration")
     public String getRegistrationView(@ModelAttribute("user") UserDto userDto, Model model) {
         // CART SIZE
@@ -39,7 +37,6 @@ public class UserController {
         model.addAttribute("cartSize", cartSize);
         return "/user/register";
     }
-
     @PostMapping("ebookstore/registration")
     public String saveUser(@ModelAttribute("user") UserDto userDto, Model model) {
         userService.saveUser(userDto);
@@ -47,13 +44,11 @@ public class UserController {
         return "/user/register";
     }
 
-    // LOGIN
     @GetMapping("/login")
     public String login() {
         return "/user/login";
     }
 
-    // USER PAGE WITH THE LIST OF PAST ORDERS
     @GetMapping("/user-page")
     public String userPage(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
@@ -66,7 +61,6 @@ public class UserController {
         model.addAttribute("cartSize", cartSize);
         return "/user/user";
     }
-
     @GetMapping
     @RequestMapping("/user-page/orders/{orderId}")
     public String purchaseDetails(Model model, @PathVariable Long orderId) {

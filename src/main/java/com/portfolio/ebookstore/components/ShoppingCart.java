@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.WebApplicationContext;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +41,7 @@ public class ShoppingCart {
         if (cartItems == null) {
             cartItems = new ArrayList<>();
         }
-
         BigDecimal newEbookPrice = ebookDto.getSellingPrice();
-
         Optional<CartItemDto> ebookInTheCart = cartItems.stream().filter(c -> c.getEbookDto().getId().equals(ebookDto.getId())).findFirst();
         if (ebookInTheCart.isPresent()) {
             ebookInTheCart.get().setQuantity(ebookInTheCart.get().getQuantity() + 1);

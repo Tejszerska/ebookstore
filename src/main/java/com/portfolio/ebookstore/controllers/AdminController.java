@@ -121,6 +121,7 @@ public class AdminController {
                               @RequestParam("criteria") String criteria) {
         List<OrderDto> searchResult = mappers.orderListEntityToDto(orderService.searchForOrder(keyword, criteria));
         model.addAttribute("searchResult", searchResult);
+        model.addAttribute("keyword", keyword);
         return "/admin/orders-search";
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,43 +10,41 @@
 <body>
 <div th:insert="~{fragments/nav-bar::nav}"></div>
 
-    <div class="container">
-        <h2>Welcome, [[${user.getName()}]]</h2>
-        
-        <span sec:authorize="isAuthenticated">
-        <a th:href="@{/logout}">
-         Logout
-        </a>
-        </span>
-        <div class="row">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">DATE</th>
-                    <th scope="col">BOUGHT EBOOKS </th>
-                    <th scope="col">TOTAL COST</th>
+<div class="container">
+    <h2>Welcome, [[${user.getName()}]]</h2>
+    <div th:if="${orders.empty}" class="row">
+        <h3>You have no past orders!</h3>
+    </div>
+    <div th:if="${!orders.empty}" class="row">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">DATE</th>
+                <th scope="col">BOUGHT EBOOKS</th>
+                <th scope="col">TOTAL COST</th>
 
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="order: ${orders}">
-                    <tr>
-                        <td><span th:text="${order.id}"> id </span></td>
-                        <td><span th:text="${order.orderTime}"> date </span></td>
-                        <td><th:block th:each="ebook: ${order.getEbooks()}">
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="order: ${orders}">
+                <tr>
+                    <td><span th:text="${order.id}"> id </span></td>
+                    <td><span th:text="${order.orderTime}"> date </span></td>
+                    <td>
+                        <th:block th:each="ebook: ${order.getEbooks()}">
                             <ul>
                                 <li th:text="${ebook.title}">title</li>
                             </ul>
-                        </th:block></td>
-                        <td><span th:text="${order.totalCost}"> cost </span></td>
-                        <td><a th:href="@{user-page/orders/__${order.id}__}"  style="width: 100%;" class="btn btn-success mb-3">Details</a></td>
-
-
-                </th:block>
-                </tbody>
-            </table>
-        </div>
+                        </th:block>
+                    </td>
+                    <td><span th:text="${order.totalCost}"> cost </span></td>
+                    <td><a th:href="@{user-page/orders/__${order.id}__}" style="width: 100%;"
+                           class="btn btn-success mb-3">Details</a></td>
+            </th:block>
+            </tbody>
+        </table>
     </div>
+</div>
 </body>
 </html>

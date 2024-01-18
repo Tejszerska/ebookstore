@@ -16,15 +16,4 @@ public class OrderDto {
     private BigDecimal totalCost;
     private String orderTime;
     private List<EbookDto> ebooks;
-
-    @Override
-    public String toString() {
-        return "PurchaseDto{" +
-                "id=" + id +
-                ", customer=" + userEmail +
-                ", totalCost=" + totalCost +
-                ", orderDate=" + orderTime +
-                ", purchasedEbooks=" + ebooks +
-                '}';
-    }
 }

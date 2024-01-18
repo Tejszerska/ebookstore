@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -95,24 +96,33 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> searchForOrder(String keyword, String criteria) {
-        switch (criteria){
-            case "id":
-               return orderRepository.findAllById(Long.valueOf(keyword));
-            case "userFull":
+        switch (criteria) {
+            case "id" -> {
+                return orderRepository.findAllById(Long.valueOf(keyword));
+            }
+            case "userFull" -> {
                 User user = userRepository.findByEmail(keyword);
                 return orderRepository.findAllByUser(user);
-            case "userContaining":
+            }
+            case "userContaining" -> {
                 List<User> allByEmailContaining = userRepository.findAllByEmailContaining(keyword);
                 List<Order> ordersByUserContaining = new ArrayList<>();
                 for (User u : allByEmailContaining) {
-                    List<Order> allByUser = orderRepository.findAllByUser(u);
-                    ordersByUserContaining.addAll(allByUser);
+                    ordersByUserContaining.addAll(orderRepository.findAllByUser(u));
                 }
                 return ordersByUserContaining;
-            case "date":
-
-            default:
+            }
+            case "ebook" -> {
+                List<Ebook> allByTitleContaining = ebookRepository.findAllByTitleContaining(keyword);
+                List<Order> allOrdersByEbookTitle = new ArrayList<>();
+                for (Ebook e : allByTitleContaining) {
+                    allOrdersByEbookTitle.addAll(orderRepository.findAllByEbooksContaining(e));
+                }
+                return allOrdersByEbookTitle;
+            }
+            default -> {
                 return new ArrayList<>();
+            }
         }
     }
 

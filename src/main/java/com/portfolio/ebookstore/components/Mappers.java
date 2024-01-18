@@ -8,7 +8,6 @@ import com.portfolio.ebookstore.model.dto.OrderDto;
 import com.portfolio.ebookstore.model.dto.UserDto;
 import com.portfolio.ebookstore.model.enums.Genre;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -33,7 +32,6 @@ public class Mappers {
                 .toList();
     }
 
-
     public User userDtoToEntity(UserDto userDto, String password) {
         return User.builder()
                 .email(userDto.getEmail())
@@ -43,13 +41,6 @@ public class Mappers {
                 .pastPurchases(userDto.getPastPurchases().stream().map(this::mapDtoToOrderWithoutUser).collect(Collectors.toList()))
                 .build();
     }
-
-    public List<User> userListDtoToEntity(List<UserDto> users, String password) {
-        return users.stream()
-                .map(user -> userDtoToEntity(user, password))
-                .toList();
-    }
-
 
     public OrderDto orderEntityToDto(Order order) {
         return OrderDto.builder().id(order
@@ -64,7 +55,6 @@ public class Mappers {
     public List<OrderDto> orderListEntityToDto(List<Order> orders){
         return orders.stream().map(this::orderEntityToDto).toList();
     }
-
 
     public Order mapDtoToOrderWithoutUser(OrderDto orderDto) {
         return Order.builder()
